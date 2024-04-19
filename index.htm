@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Carrusel</title>
+    <style>
+        /* Para crear un carrusel solo con CSS el truco, en este caso, es crear divs
+        con las imágenes y etiquetas label asociadas a input de tipo checkbox. Luego jugamos
+        con el estado de este input, marcado o no, para mostrar u ocultar imágenes.
+        Como con CSS no podemos desactivar un checkbox, hacemos que la última imagen
+        tenga un enlace a la propia página, con lo que se vuelve a cargar y ya tenemos
+        de nuevo la primera imagen */
+        h1 {
+            font-size: 2rem;
+            text-align: center;
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+        }
+      #carrusel {
+        width: 60%;
+        margin: auto;
+        position: relative;
+      }
+      #carrusel div img {
+        width: 100%;
+        height: 100%;
+      }
+      /* Ocultamos todos los input */
+      #carrusel div input {
+        display: none;
+      }
+      /* Ocultamos todos los div de imágenes menos el primero */
+      #carrusel div:nth-child(n + 2) {
+        opacity: 0;
+        display: none;
+      }
+      /* Posicionamos el enlace y el label para moverse al siguiente, en la zona
+      centra derecha */
+      #carrusel div label,
+      #carrusel div a {
+        position: absolute;
+        /* Si usamos top: 50%, el label y el a se colocan a partir de ese 50%, no en
+        medio de ese 50%. Con lo que usamos calc para quitarle a ese 50% la mitad del
+        tamaño de la letra (mejor sería indicar un line-height y restarle esa mitad) */
+        top: calc(50% - 1.5rem); 
+        right: 10px;
+        font-size: 3rem;
+        color: white;
+        text-shadow: 2px 2px 4px black;
+        text-decoration: none;
+      }
+      /* Cuando un input este marcado, ocultamos si div usando :has que nos permite
+      comprobar si un elemento tiene un determinado contenido sin entrar en el mismo,
+      cosa que hace espacio o >, con lo que no podríamos referirnos al padre de nuevo.
+      Usamos !important para darle más prioridad a display; también podemos ponerlo
+      después del siguiente selector */
+      #carrusel div:has(input:checked) {
+        display: none !important;
+      }
+      #carrusel div:has(input:checked) + div:not(input:checked) {
+        display: block;
+        /* A cambiar display, la propeidad transition-property: opacity; no funciona, 
+        con lo que una solución es usar animaciones. Para ello se indica un nombre
+        de animación cualquiera que luego usaremos, la duración de la animación y 
+        hacia donde se ejecuta la animación */
+        animation: opacidad 2s forwards;
+      }
+      /* Aquí ponemos el nombre de la animación que indicamos antes.
+      Una animación peude tener varios keyframes o puntos claves, donde hacemos diferentes
+      cambios a propiedades. Para ello indicamos uno o varios porcentajes y las propiedades
+      a cambiar. En este caso queremos que la opacidad se ponga al máximo al final de la
+      animación (100%); si por ejemplo ponemos 50%, ya estaría al máximo al llegar a la
+      mitad de la animación.
+      Hemos añadido también la propeidad clip-path que recorta la imagen, en este caso
+      con respecto a una forma de círculo. Al comienzo queremos que esté un círculo de 30%,
+      al mitad de la animación en un 70% y al final que no haya recorte */
+      @keyframes opacidad {
+        0% {
+            clip-path: circle(30%);
+        }
+        50% {
+            clip-path: circle(70%);
+        }
+        100% {
+          opacity: 1;
+          clip-path: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Carrusel de fotos con CSS</h1>
+    <div id="carrusel">
+      <div>
+        <img src="imagenes/foto1.jpeg" alt="" /><label for="s1">&gt;</label
+        ><input type="checkbox" id="s1" />
+      </div>
+      <div>
+        <img src="imagenes/foto2.jpeg" alt="" /><label for="s2">&gt;</label
+        ><input type="checkbox" id="s2" />
+      </div>
+      <div>
+        <img src="imagenes/foto3.jpeg" alt="" /><label for="s3">&gt;</label
+        ><input type="checkbox" id="s3" />
+      </div>
+      <div>
+        <img src="imagenes/foto4.jpeg" alt="" /><label for="s4">&gt;</label
+        ><input type="checkbox" id="s4" />
+      </div>
+      <div>
+        <img src="imagenes/foto5.jpeg" alt="" /><label for="s5">&gt;</label
+        ><input type="checkbox" id="s5" />
+      </div>
+      <div>
+        <img src="imagenes/foto6.jpeg" alt="" /><label for="s6">&gt;</label
+        ><input type="checkbox" id="s6" />
+      </div>
+      <div>
+        <img src="imagenes/foto7.jpeg" alt="" /><label for="s7">&gt;</label
+        ><input type="checkbox" id="s7" />
+      </div>
+      <div>
+        <img src="imagenes/foto8.jpeg" alt="" /><label for="s8">&gt;</label
+        ><input type="checkbox" id="s8" />
+      </div>
+      <div>
+        <img src="imagenes/foto9.jpeg" alt="" /><label for="s9">&gt;</label
+        ><input type="checkbox" id="s9" />
+      </div>
+      <div><img src="imagenes/foto10.jpeg" alt="" /><a href="">&gt;</a></div>
+    </div>
+  </body>
+</html>
