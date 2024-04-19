@@ -31,7 +31,6 @@
       }
       /* Ocultamos todos los div de imágenes menos el primero */
       #carrusel div:nth-child(n + 2) {
-        opacity: 0;
         display: none;
       }
       /* Posicionamos el enlace y el label para moverse al siguiente, en la zona
@@ -77,6 +76,7 @@
       @keyframes opacidad {
         0% {
             clip-path: circle(30%);
+            opacity: 0;
         }
         50% {
             clip-path: circle(70%);
